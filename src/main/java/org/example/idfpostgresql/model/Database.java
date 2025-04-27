@@ -1,12 +1,10 @@
 package org.example.idfpostgresql.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @jakarta.persistence.Entity
 @Table(name = "databases")
@@ -31,7 +29,15 @@ public class Database {
     @Column(name = "responsible_team")
     private String responsibleTeam; // צוות אחראי
 
-    @OneToMany(mappedBy = "database", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"database", "hibernateLazyInitializer", "handler"})
-    private List<Entity> entities;
+    @Column(name = "classification")
+    private String classification; //סייוג
+
+    @Column(name = "scrapping_date")
+    private String scrappingDate; // תאריך גריטה
+
+    @Column(name = "updated_date")
+    private String updatedDate; // תאריך עדכון
+
+    @Column(name = "active")
+    private Integer active; // 0 - not active, 1 - active
 }

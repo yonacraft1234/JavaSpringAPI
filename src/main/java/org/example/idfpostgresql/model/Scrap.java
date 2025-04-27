@@ -1,11 +1,9 @@
 package org.example.idfpostgresql.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 
 @jakarta.persistence.Entity
 @Table(name = "scraps")
@@ -34,25 +32,6 @@ public class Scrap {
     private Integer userId;
 
     @Column(name = "scrap_date")
-    private LocalDate scrapDate;
+    private String scrapDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "db_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"entities", "hibernateLazyInitializer", "handler"})
-    private Database database;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"fields", "database", "hibernateLazyInitializer", "handler"})
-    private Entity entity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "field_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"entity", "hibernateLazyInitializer", "handler"})
-    private Field field;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User user;
 }

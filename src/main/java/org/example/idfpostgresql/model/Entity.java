@@ -1,12 +1,10 @@
 package org.example.idfpostgresql.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @jakarta.persistence.Entity
 @Table(name = "entities")
@@ -27,12 +25,13 @@ public class Entity {
     @Column(name = "db_id")
     private Long dbId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "db_id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Database database;
+    @Column(name = "scrapping_date")
+    private String scrappingDate; // תאריך גריטה
 
-    @OneToMany(mappedBy = "entity", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"entity", "hibernateLazyInitializer", "handler"})
-    private List<Field> fields;
+    @Column(name = "updated_date")
+    private String updatedDate; // תאריך עדכון
+
+    @Column(name = "active")
+    private Integer active; // 0 - not active, 1 - active
+
 }

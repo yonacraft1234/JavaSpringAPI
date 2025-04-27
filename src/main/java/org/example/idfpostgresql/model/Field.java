@@ -1,6 +1,5 @@
 package org.example.idfpostgresql.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +27,12 @@ public class Field {
     @Column(name = "entity_id")
     private Long entityId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entity_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"fields", "database", "hibernateLazyInitializer", "handler"})
-    private Entity entity;
+    @Column(name = "scrapping_date")
+    private String scrappingDate; // תאריך גריטה
+
+    @Column(name = "updated_date")
+    private String updatedDate; // תאריך עדכון
+
+    @Column(name = "active")
+    private Integer active; // 0 - not active, 1 - active
 }
