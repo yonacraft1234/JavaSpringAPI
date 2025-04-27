@@ -1,0 +1,160 @@
+# src/main/resources/graphql/schema.graphqls
+
+# Database Type
+type Database {
+    id: ID!
+    dbNameHebrew: String
+    englishName: String
+    responsibleUnit: String
+    responsibleTeam: String
+    entities: [Entity]
+}
+
+# Entity Type
+type Entity {
+    id: ID!
+    nameHebrew: String
+    nameEnglish: String
+    dbId: ID
+    database: Database
+    fields: [Field]
+}
+
+# Field Type
+type Field {
+    id: ID!
+    nameHebrew: String
+    nameEnglish: String
+    typeOf: String
+    entityId: ID
+    entity: Entity
+}
+
+# User Type
+type User {
+    id: ID!
+    firstName: String
+    lastName: String
+    serial: String
+    classification: Int
+}
+
+# Authentication Response Type
+type AuthResponse {
+    authenticated: Boolean!
+    user: User
+}
+
+# Query Type - all available queries
+type Query {
+    # Database Queries
+    databases: [Database]
+    database(id: ID!): Database
+    databasesByUnit(unit: String!): [Database]
+    databasesByTeam(team: String!): [Database]
+    searchDatabases(keyword: String!): [Database]
+
+    # Entity Queries
+    entities: [Entity]
+    entity(id: ID!): Entity
+    entitiesByDatabaseId(dbId: ID!): [Entity]
+    searchEntitiesByEnglishName(keyword: String!): [Entity]
+    searchEntitiesByHebrewName(keyword: String!): [Entity]
+
+    # Field Queries
+    fields: [Field]
+    field(id: ID!): Field
+    fieldsByEntityId(entityId: ID!): [Field]
+    fieldsByType(typeOf: String!): [Field]
+    searchFieldsByEnglishName(keyword: String!): [Field]
+
+    # User Queries
+    users: [User]
+    user(id: ID!): User
+    userBySerial(serial: String!): User
+    usersByClassification(classification: Int!): [User]
+    searchUsersByLastName(lastName: String!): [User]
+}
+
+# Mutation Type - all available mutations
+type Mutation {
+    # Database Mutations
+    createDatabase(
+        dbNameHebrew: String!,
+        englishName: String!,
+        responsibleUnit: String!,
+        responsibleTeam: String!
+    ): Database
+
+    updateDatabase(
+        id: ID!,
+        dbNameHebrew: String!,
+        englishName: String!,
+        responsibleUnit: String!,
+        responsibleTeam: String!
+    ): Database
+
+    deleteDatabase(id: ID!): Boolean
+
+    # Entity Mutations
+    createEntity(
+        id: ID!,
+        nameHebrew: String!,
+        nameEnglish: String!,
+        dbId: ID!
+    ): Entity
+
+    updateEntity(
+        id: ID!,
+        nameHebrew: String!,
+        nameEnglish: String!,
+        dbId: ID!
+    ): Entity
+
+    deleteEntity(id: ID!): Boolean
+
+    # Field Mutations
+    createField(
+        id: ID!,
+        nameHebrew: String!,
+        nameEnglish: String!,
+        typeOf: String!,
+        entityId: ID!
+    ): Field
+
+    updateField(
+        id: ID!,
+        nameHebrew: String!,
+        nameEnglish: String!,
+        typeOf: String!,
+        entityId: ID!
+    ): Field
+
+    deleteField(id: ID!): Boolean
+
+    # User Mutations
+    createUser(
+        id: ID!,
+        firstName: String!,
+        lastName: String!,
+        serial: String!,
+        password: String!,
+        classification: Int!
+    ): User
+
+    updateUser(
+        id: ID!,
+        firstName: String,
+        lastName: String,
+        serial: String,
+        password: String,
+        classification: Int
+    ): User
+
+    deleteUser(id: ID!): Boolean
+
+    authenticateUser(
+        serial: String!,
+        password: String!
+    ): Boolean
+}
